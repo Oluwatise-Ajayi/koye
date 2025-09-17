@@ -11,7 +11,7 @@ async function processBatch(){
   if(buffer.length===0) return;
   const batch = buffer.splice(0, buffer.length);
   try {
-    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_MUMBAI_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_AMOY_RPC_URL);
     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY||'', provider);
     const abi = require('../abi/KoyeCertificate.json').abi;
     const contract = new ethers.Contract(process.env.KOYE_CONTRACT_ADDRESS||'', abi, wallet);

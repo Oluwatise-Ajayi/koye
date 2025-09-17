@@ -48,5 +48,5 @@ contract KoyeCertificate is ERC721, Ownable, Pausable, ReentrancyGuard {
     function tokenURI(uint256 tokenId) public view override returns (string memory){
         require(_exists(tokenId),"no token"); string memory base=_baseURI(); return bytes(base).length>0?string(abi.encodePacked(base,tokenId.toString())):"";
     }
-    function _beforeTokenTransfer(address from,address to,uint256 tokenId) internal override { super._beforeTokenTransfer(from,to,tokenId); require(!paused(),"paused"); }
+    function _beforeTokenTransfer(address from,address to,uint256 tokenId,uint256 batchSize) internal override { super._beforeTokenTransfer(from,to,tokenId,batchSize); require(!paused(),"paused"); }
 }
