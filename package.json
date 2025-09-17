@@ -1,0 +1,8 @@
+{
+  "name": "koye-monorepo",
+  "private": true,
+  "workspaces": [
+    "blockchain",
+    "backend"
+  ]
+}

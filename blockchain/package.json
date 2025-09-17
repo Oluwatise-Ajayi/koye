@@ -1,0 +1,15 @@
+{
+  "name": "koye-blockchain",
+  "version": "0.1.0",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "hardhat": "^2.17.0",
+    "typescript": "^5.6.2",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^4.9.3",
+    "ethers": "^6.11.0"
+  }
+}
