@@ -2,7 +2,9 @@
   "name": "koye-backend",
   "version": "0.1.0",
   "scripts": {
-    "start": "ts-node-dev --respawn src/index.ts"
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@web3-storage/w3up-client": "^2.3.0",
@@ -19,8 +21,8 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
-    "@types/node": "^20.4.2",
+    "@types/node": "^20.19.17",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.6.2"
+    "typescript": "^5.9.2"
   }
 }
