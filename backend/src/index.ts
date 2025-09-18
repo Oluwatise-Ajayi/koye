@@ -10,6 +10,9 @@ const app = express();
 app.use(express.json());
 app.use('/uploads', uploadRoutes);
 app.use('/art', artRoutes);
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
 async function main(){
   await AppDataSource.initialize();
   console.log('DB connected');
