@@ -2,6 +2,6 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { Art } from './entities/Art';
 import { User } from './entities/User';
-export const AppDataSource = new DataSource({ type: 'postgres',ssl: {
+export const AppDataSource = new DataSource({ type: 'postgres'},ssl: {
     rejectUnauthorized: false, // Required for Supabase's self-signed certificates
   }, url: process.env.DATABASE_URL, synchronize: false, entities: [Art, User], logging: true });
