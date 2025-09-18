@@ -5,21 +5,24 @@ const queues_1 = require("../queues");
 const orm_1 = require("../orm");
 const Art_1 = require("../entities/Art");
 const ethers_1 = require("ethers");
-const BATCH_SIZE = parseInt(process.env.MINT_BATCH_SIZE || '20');
-const BATCH_INTERVAL = parseInt(process.env.MINT_BATCH_INTERVAL_SEC || '60') * 1000;
+const BATCH_SIZE = parseInt(process.env.MINT_BATCH_SIZE || "20");
+const BATCH_INTERVAL = parseInt(process.env.MINT_BATCH_INTERVAL_SEC || "60") * 1000;
 let buffer = [];
 let timer = null;
-function resetTimer() { if (timer)
-    clearTimeout(timer); timer = setTimeout(() => processBatch().catch(e => console.error(e)), BATCH_INTERVAL); }
+function resetTimer() {
+    if (timer)
+        clearTimeout(timer);
+    timer = setTimeout(() => processBatch().catch((e) => console.error(e)), BATCH_INTERVAL);
+}
 async function processBatch() {
     if (buffer.length === 0)
         return;
     const batch = buffer.splice(0, buffer.length);
     try {
         const provider = new ethers_1.ethers.JsonRpcProvider(process.env.POLYGON_AMOY_RPC_URL);
-        const wallet = new ethers_1.ethers.Wallet(process.env.PRIVATE_KEY || '', provider);
-        const abi = require('../abi/KoyeCertificate.json').abi;
-        const contract = new ethers_1.ethers.Contract(process.env.KOYE_CONTRACT_ADDRESS || '', abi, wallet);
+        const wallet = new ethers_1.ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
+        const abi = require("../abi/KoyeCertificate.json").abi;
+        const contract = new ethers_1.ethers.Contract(process.env.KOYE_CONTRACT_ADDRESS || "", abi, wallet);
         const recipients = [];
         const metadataHashes = [];
         const contentTypes = [];
@@ -38,19 +41,19 @@ async function processBatch() {
             return;
         const tx = await contract.batchMint(recipients, metadataHashes, contentTypes, { gasLimit: 5000000 });
         const receipt = await tx.wait();
-        console.log('batch mint tx', receipt.transactionHash);
+        console.log("batch mint tx", receipt.transactionHash);
         for (const item of batch) {
             const repo = orm_1.AppDataSource.getRepository(Art_1.Art);
             const art = await repo.findOneBy({ id: item.artId });
             if (!art)
                 continue;
-            art.nftStatus = 'minted_pending';
+            art.nftStatus = "minted_pending";
             art.nftTxHash = receipt.transactionHash;
             await repo.save(art);
         }
     }
     catch (err) {
-        console.error('batch failed', err);
+        console.error("batch failed", err);
     }
     timer = null;
 }

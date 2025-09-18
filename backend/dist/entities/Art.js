@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", String)
 ], Art.prototype, "ipfsMetadataCid", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'json', nullable: true }),
+    (0, typeorm_1.Column)('simple-json', { nullable: true }),
     __metadata("design:type", Object)
 ], Art.prototype, "metadataJson", void 0);
 __decorate([

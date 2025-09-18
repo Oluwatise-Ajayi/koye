@@ -18,7 +18,7 @@ router.post('/upload', async (req, res) => {
         let artist = null;
         if (username)
             artist = await userRepo.findOneBy({ username });
-        const art = repo.create({ title, description, fileUrl, metadataJson: metadata || {}, aiStatus: 'pending', nftStatus: 'queued', artist: artist || null });
+        const art = repo.create({ title, description, fileUrl, metadataJson: metadata || {}, aiStatus: 'pending', nftStatus: 'queued', artist: artist || undefined });
         await repo.save(art);
         const ipfs = await (0, ipfsService_1.pinJsonToIPFS)({ title, description, file: fileUrl, metadata: metadata || {} });
         art.ipfsMetadataCid = ipfs.cid;
