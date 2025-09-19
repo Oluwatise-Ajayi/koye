@@ -84,7 +84,7 @@ async function main(){
   try {
     console.log('🚀 Starting main function...');
     
-    const port = process.env.PORT || 3000;
+    const port = parseInt(process.env.PORT || '3000', 10);
     
     console.log(`🌐 Starting server on port ${port}...`);
     
@@ -120,7 +120,6 @@ async function main(){
     
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown startup error';
-    const errorStack = error instanceof Error ? error.stack : 'No stack trace';
     console.error('💥 Fatal error during startup:', errorMessage);
     process.exit(1);
   }
