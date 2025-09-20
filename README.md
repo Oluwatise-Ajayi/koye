@@ -47,10 +47,62 @@ Kóyè updated repo (blockchain + backend scaffold).
   ```
 
 ### 4. API Endpoints
-- `/uploads/presign` - Get a presigned URL for uploads
-- `/art/upload` - Upload art metadata
 
-The backend uses Bull for queues and batch minting.
+#### 1. `/uploads/presign` (POST)
+Get a presigned AWS S3 URL for uploading files.
+
+**Request Body:**
+```json
+{
+  "filename": "myart.png",
+  "contentType": "image/png",
+  "keyPrefix": "optional-folder-name"
+}
+```
+**Response:**
+```json
+{
+  "presignedUrl": "https://...",
+  "fileKey": "...",
+  "publicUrl": "https://..."
+}
+```
+
+#### 2. `/art/upload` (POST)
+Upload art metadata and queue for NFT minting.
+
+**Request Body:**
+```json
+{
+  "title": "My Art",
+  "description": "A beautiful digital painting.",
+  "fileUrl": "https://your-bucket.s3.amazonaws.com/my-art.png",
+  "metadata": { "genre": "abstract", "year": 2025 },
+  "username": "artist123",
+  "artistWallet": "0x1234abcd5678ef..."
+}
+```
+**Response:**
+```json
+{
+  "artId": 1,
+  "status": "pending"
+}
+```
+
+#### 3. `/art/status/:artId` (GET)
+Check the status of AI processing and NFT minting for an artwork.
+
+**Response:**
+```json
+{
+  "artId": 1,
+  "aiStatus": "pending|done|failed",
+  "nftStatus": "queued|minted_pending|minted|failed",
+  "nftTokenId": 123,
+  "nftTxHash": "0x..."
+}
+```
 
 ---
 - Make sure you have enough testnet MATIC on Polygon Amoy for contract deployment and minting.
