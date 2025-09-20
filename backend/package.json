@@ -5,7 +5,7 @@
     "start": "ts-node-dev --respawn src/index.ts"
   },
   "dependencies": {
-    "@web3-storage/w3up-client": "^2.3.0",
+    "@storacha/client": "^1.7.10",
     "aws-sdk": "^2.1360.0",
     "axios": "^1.5.0",
     "bull": "^4.11.0",
